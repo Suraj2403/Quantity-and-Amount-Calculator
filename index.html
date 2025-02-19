@@ -59,6 +59,10 @@
             text-align: center;
         }
 
+        .success-msg {
+            color: green;
+        }
+
         .error-msg {
             color: red;
         }
@@ -75,14 +79,18 @@
 
             if (initialUnitValue && initialPriceValue) {
                 resultMessage.classList.remove('error-msg');
+                resultMessage.classList.remove('success-msg');
+
                 if (finalUnitValue) {
                     const calcValue = parseFloat(((initialPriceValue * finalUnitValue) / initialUnitValue).toFixed(2));
                     document.getElementById("FinalAmount").value = calcValue;
                     resultMessage.textContent = `${finalUnitValue} ml/gm will cost ₹${calcValue}`;
+                    resultMessage.classList.add('success-msg');
                 } else if (finalAmountValue) {
                     const calcValue = parseFloat(((initialUnitValue * finalAmountValue) / initialPriceValue).toFixed(2));
                     document.getElementById("FinalUnit").value = calcValue;
                     resultMessage.textContent = `₹${finalAmountValue} will get you ${calcValue} ml/gm`;
+                    resultMessage.classList.add('success-msg');
                 } else {
                     resultMessage.textContent = 'Please enter either output amount or price!';
                     resultMessage.classList.add('error-msg');
@@ -93,6 +101,7 @@
         function clearOutputField(fieldId) {
             const resultMessage = document.getElementById('resultMessage');
             resultMessage.textContent = "";
+            resultMessage.classList.remove('success-msg');
             resultMessage.classList.remove('error-msg');
             document.getElementById(fieldId).value = null;
         }
