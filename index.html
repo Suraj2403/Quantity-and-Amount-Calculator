@@ -1,148 +1,216 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <link rel="icon" href="balance.svg" sizes="any" type="image/svg+xml">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="balance.svg" sizes="any" type="image/svg+xml" />
     <title>Quanitity/Amount Calculation Application</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+      }
 
-        @font-face {
-            font-family: "72 Brand Variable";
-            font-weight: 400;
-            font-style: normal;
-            src: url("./web-fonts/woff2/72-Regular.woff2") format('woff2');
-        }
+      @font-face {
+        font-family: "72 Brand Variable";
+        font-weight: 400;
+        font-style: normal;
+        src: url("./web-fonts/woff2/72-Regular.woff2") format("woff2");
+      }
 
-        body {
-            font-family: "72 Brand Variable", serif;
-            background-color: #f2f2f2;
-            font-optical-sizing: auto;
-            font-style: normal;
-            font-variation-settings: "wdth" 100;
-        }
+      body {
+        font-family: "72 Brand Variable", serif;
+        background-color: #f2f2f2;
+        font-optical-sizing: auto;
+        font-style: normal;
+        font-variation-settings: "wdth" 100;
+      }
 
-        input[type=number] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+      input[type="number"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
 
-        button {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+      button {
+        width: 100%;
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-        button:hover {
-            background-color: #45a049;
-        }
+      button:hover {
+        background-color: #45a049;
+      }
 
-        div {
-            border-radius: 5px;
-            padding: 50px;
-        }
+      div {
+        border-radius: 5px;
+        padding: 50px;
+      }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 5%;
-        }
+      h2 {
+        text-align: center;
+        margin-bottom: 5%;
+      }
 
-        .result {
-            margin-top: 10px;
-            font-size: 18px;
-            text-align: center;
-        }
+      .result {
+        margin-top: 10px;
+        font-size: 18px;
+        text-align: center;
+      }
 
-        .success-msg {
-            color: green;
-        }
+      .success-msg {
+        color: green;
+      }
 
-        .error-msg {
-            color: red;
-        }
+      .error-msg {
+        color: red;
+      }
+
+      .footer-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5%;
+      }
     </style>
     <script>
-        function updateResultMessage(message, isSuccess = false) {
-            const resultMessage = document.getElementById('resultMessage');
-            resultMessage.textContent = message;
-            resultMessage.classList.remove('error-msg', 'success-msg');
-            resultMessage.classList.add(isSuccess ? 'success-msg' : 'error-msg');
-        };
+      function updateResultMessage(message, isSuccess = false) {
+        const resultMessage = document.getElementById("resultMessage");
+        resultMessage.textContent = message;
+        resultMessage.classList.remove("error-msg", "success-msg");
+        resultMessage.classList.add(isSuccess ? "success-msg" : "error-msg");
+      }
 
-        function handleCalcBtnClick(evt) {
-            evt.preventDefault();
+      function handleCalcBtnClick(evt) {
+        evt.preventDefault();
 
-            const initialUnitValue = document.getElementById("InitialUnit").valueAsNumber;
-            const initialPriceValue = document.getElementById("InitialPrice").valueAsNumber;
-            const finalUnitValue = document.getElementById("FinalUnit").valueAsNumber;
-            const finalAmountValue = document.getElementById("FinalAmount").valueAsNumber;
-            const resultMessage = document.getElementById('resultMessage');
+        const initialUnitValue =
+          document.getElementById("InitialUnit").valueAsNumber;
+        const initialPriceValue =
+          document.getElementById("InitialPrice").valueAsNumber;
+        const finalUnitValue =
+          document.getElementById("FinalUnit").valueAsNumber;
+        const finalAmountValue =
+          document.getElementById("FinalAmount").valueAsNumber;
+        const resultMessage = document.getElementById("resultMessage");
 
-            if (initialUnitValue && initialPriceValue) {
-                updateResultMessage("", false);
+        if (initialUnitValue && initialPriceValue) {
+          updateResultMessage("", false);
 
-                if (finalUnitValue) {
-                    const calcValue = parseFloat(((initialPriceValue * finalUnitValue) / initialUnitValue).toFixed(2));
-                    document.getElementById("FinalAmount").value = calcValue;
-                    updateResultMessage(`${finalUnitValue} ml/gm will cost ₹${calcValue}`, true);
-                } else if (finalAmountValue) {
-                    const calcValue = parseFloat(((initialUnitValue * finalAmountValue) / initialPriceValue).toFixed(2));
-                    document.getElementById("FinalUnit").value = calcValue;
-                    updateResultMessage(`₹${finalAmountValue} will get you ${calcValue} ml/gm`, true);
-                } else {
-                    updateResultMessage('Please enter either output amount or output price!', false);
-                }
-            } else {
-                updateResultMessage('Please enter amount, price and either output amount or output price!', false);
-            }
+          if (finalUnitValue) {
+            const calcValue = parseFloat(
+              ((initialPriceValue * finalUnitValue) / initialUnitValue).toFixed(
+                2
+              )
+            );
+            document.getElementById("FinalAmount").value = calcValue;
+            updateResultMessage(
+              `${finalUnitValue} ml/gm will cost ₹${calcValue}`,
+              true
+            );
+          } else if (finalAmountValue) {
+            const calcValue = parseFloat(
+              (
+                (initialUnitValue * finalAmountValue) /
+                initialPriceValue
+              ).toFixed(2)
+            );
+            document.getElementById("FinalUnit").value = calcValue;
+            updateResultMessage(
+              `₹${finalAmountValue} will get you ${calcValue} ml/gm`,
+              true
+            );
+          } else {
+            updateResultMessage(
+              "Please enter either output amount or output price!",
+              false
+            );
+          }
+        } else {
+          updateResultMessage(
+            "Please enter amount, price and either output amount or output price!",
+            false
+          );
         }
+      }
 
-        function clearOutputField(fieldId) {
-            updateResultMessage("", false);
-            document.getElementById(fieldId).value = null;
+      function clearOutputField(fieldId) {
+        updateResultMessage("", false);
+        document.getElementById(fieldId).value = null;
+      }
+
+      function resetForm() {
+        const formElem = document.getElementById("calc-form");
+        updateResultMessage("", false);
+        if (formElem) {
+          formElem.reset();
         }
+      }
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>
-        <h2>Price/Quantity Calculator</h2>
-        <form id="calc-form" onsubmit="handleCalcBtnClick(event)">
-            <label for="InitialUnit"><strong>Enter Known Quantity (ml/gm etc.):</strong></label><br>
-            <input type="number" id="InitialUnit" name="InitialUnit" required step="0.01"/><br />
+      <h2>Price/Quantity Calculator</h2>
+      <form id="calc-form" onsubmit="handleCalcBtnClick(event)">
+        <label for="InitialUnit"
+          ><strong>Enter Known Quantity (ml/gm etc.):</strong></label
+        ><br />
+        <input
+          type="number"
+          id="InitialUnit"
+          name="InitialUnit"
+          required
+          step="0.01"
+        /><br />
 
-            <label for="InitialPrice"><strong>Enter Known Price (Rs):</strong></label><br>
-            <input type="number" id="InitialPrice" name="InitialPrice" required step="0.01" /><br />
+        <label for="InitialPrice"
+          ><strong>Enter Known Price (Rs):</strong></label
+        ><br />
+        <input
+          type="number"
+          id="InitialPrice"
+          name="InitialPrice"
+          required
+          step="0.01"
+        /><br />
 
-            <label for="FinalUnit"><strong>Output Quantity (ml/gm etc.):</strong></label><br>
-            <input type="number" id="FinalUnit" name="FinalUnit" onchange="clearOutputField('FinalAmount')" step="0.01"/><br />
+        <label for="FinalUnit"
+          ><strong>Output Quantity (ml/gm etc.):</strong></label
+        ><br />
+        <input
+          type="number"
+          id="FinalUnit"
+          name="FinalUnit"
+          onchange="clearOutputField('FinalAmount')"
+          step="0.01"
+        /><br />
 
-            <label for="FinalAmount"><strong>Output Price (Rs):</strong></label><br>
-            <input type="number" id="FinalAmount" name="FinalAmount" step="0.01"
-                onchange="clearOutputField('FinalUnit')" /><br />
+        <label for="FinalAmount"><strong>Output Price (Rs):</strong></label
+        ><br />
+        <input
+          type="number"
+          id="FinalAmount"
+          name="FinalAmount"
+          step="0.01"
+          onchange="clearOutputField('FinalUnit')"
+        /><br />
+        <div class="footer-buttons">
+          <button type="submit" style="font-size: large">Calculate</button>
+          <button type="button" style="font-size: large" onclick="resetForm()">Reset</button>
+        </div>
+      </form>
 
-            <button type="submit" style="font-size: large;">Calculate </button>
-        </form>
-
-        <p class="result" id="resultMessage"></p>
+      <p class="result" id="resultMessage"></p>
     </div>
-
-</body>
-
+  </body>
 </html>
