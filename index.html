@@ -125,13 +125,13 @@
         <h2>Price/Quantity Calculator</h2>
         <form id="calc-form" onsubmit="handleCalcBtnClick(event)">
             <label for="InitialUnit"><strong>Enter Known Quantity (ml/gm etc.):</strong></label><br>
-            <input type="number" id="InitialUnit" name="InitialUnit" required /><br />
+            <input type="number" id="InitialUnit" name="InitialUnit" required step="0.01"/><br />
 
             <label for="InitialPrice"><strong>Enter Known Price (Rs):</strong></label><br>
             <input type="number" id="InitialPrice" name="InitialPrice" required step="0.01" /><br />
 
             <label for="FinalUnit"><strong>Output Quantity (ml/gm etc.):</strong></label><br>
-            <input type="number" id="FinalUnit" name="FinalUnit" onchange="clearOutputField('FinalAmount')" /><br />
+            <input type="number" id="FinalUnit" name="FinalUnit" onchange="clearOutputField('FinalAmount')" step="0.01"/><br />
 
             <label for="FinalAmount"><strong>Output Price (Rs):</strong></label><br>
             <input type="number" id="FinalAmount" name="FinalAmount" step="0.01"
