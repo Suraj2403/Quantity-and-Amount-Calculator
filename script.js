@@ -147,3 +147,91 @@ function resetAgeForm() {
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".tablinks").click();
 });
+
+let coin = document.getElementById("coin");
+let flipBtn = document.getElementById("flipBtn");
+let currentRotation = 0;
+let isFlipping = false;
+let frontText = document.getElementById("frontText");
+let backText = document.getElementById("backText");
+
+// Lively confetti
+function createConfetti() {
+  const container = document.body;
+  const colors =["#ff0000","#00ff00","#0000ff","#ffff00","#ff00ff","#00ffff","#ff7f00","#7fff00","#ff1493","#1e90ff","#ffd700","#adff2f","#ff69b4","#00fa9a","#ffa500","#8a2be2","#ff4500","#7cfc00","#00ced1","#ff1493"];
+
+  for (let i = 0; i < 200; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    // Random small size
+    const w = 3 + Math.random() * 5;
+    const h = 6 + Math.random() * 12;
+    confetti.style.width = w + "px";
+    confetti.style.height = h + "px";
+
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    // Start at random X at top of page
+    const startX = Math.random() * window.innerWidth;
+    const startY = -10; // slightly above viewport
+    confetti.style.position = "absolute";
+    confetti.style.left = startX + "px";
+    confetti.style.top = startY + "px";
+    confetti.style.opacity = 0.9;
+    confetti.style.borderRadius = "2px";
+    
+    // Random fall speed and sway
+    const velocityY = 2 + Math.random() * 4;       // vertical speed
+    const sway = Math.random() * 4 - 2;            // left/right sway per frame
+    let posX = startX;
+    let posY = startY;
+    let rotation = Math.random() * 360;
+    const rotationSpeed = Math.random() * 10;
+
+    const fall = () => {
+      posY += velocityY;
+      posX += sway;
+      rotation += rotationSpeed;
+      confetti.style.transform = `translate(${posX - startX}px, ${posY}px) rotate(${rotation}deg)`;
+
+      if (posY < window.innerHeight + 20) {
+        requestAnimationFrame(fall);
+      } else {
+        confetti.remove();
+      }
+    };
+
+    container.appendChild(confetti);
+    requestAnimationFrame(fall);
+  }
+}
+
+function flipCoin() {
+  if (isFlipping) return;
+  isFlipping = true;
+  flipBtn.disabled = true;
+
+  let name1 = document.getElementById("name1").value.trim() || "HEADS";
+  let name2 = document.getElementById("name2").value.trim() || "TAILS";
+
+  frontText.innerText = name1.toUpperCase();
+  backText.innerText = name2.toUpperCase();
+
+  let random = Math.random() < 0.5 ? 0 : 1;
+  let targetAngle = random === 0 ? 0 : 180;
+
+  let fullSpins = 3 + Math.floor(Math.random() * 3);
+  currentRotation = Math.floor(currentRotation / 360) * 360;
+  currentRotation += fullSpins * 360 + targetAngle;
+
+  coin.style.transform = "rotateY(" + currentRotation + "deg)";
+
+  setTimeout(() => {
+    document.getElementById("result").innerText =
+      "Winner: " + (random === 0 ? name1 : name2).toUpperCase();
+    isFlipping = false;
+    flipBtn.disabled = false;
+    createConfetti(); // trigger lively confetti
+  }, 5000);
+}

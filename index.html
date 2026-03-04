@@ -18,6 +18,9 @@
         <button class="tablinks" onclick="openTab(event, 'ageTab')">
           Age Calculator
         </button>
+        <button class="tablinks" onclick="openTab(event, 'coinFlipTab')">
+          Coin Flip
+        </button>
       </div>
     </nav>
 
@@ -112,6 +115,23 @@
         </form>
 
         <p class="result" id="resultMessageAge"></p>
+      </div>
+    </div>
+    <div id="coinFlipTab" class="tabcontent">
+      <div class="container">
+        <h2>Coin Flip</h2>
+
+        <input type="text" id="name1" maxlength="6" placeholder="HEADS">
+        <input type="text" id="name2" maxlength="6" placeholder="TAILS"><br>
+
+        <button id="flipBtn" onclick="flipCoin()">Flip Coin</button>
+
+        <div class="coin" id="coin">
+          <div class="side front" id="frontText">HEADS</div>
+          <div class="side back" id="backText">TAILS</div>
+        </div>
+
+        <div class="resultflip" id="result"></div>
       </div>
     </div>
 
