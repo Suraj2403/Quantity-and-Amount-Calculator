@@ -71,6 +71,7 @@ function resetAmountForm() {
 }
 
 function openTab(evt, tabName) {
+  document.getElementById("navMenu").classList.remove("show")
   const tabcontent = document.getElementsByClassName("tabcontent");
   const tablinks = document.getElementsByClassName("tablinks");
   for (let i = 0; i < tabcontent.length; i++) {
@@ -158,52 +159,18 @@ let backText = document.getElementById("backText");
 // Lively confetti
 function createConfetti() {
   const container = document.body;
-  const colors =["#ff0000","#00ff00","#0000ff","#ffff00","#ff00ff","#00ffff","#ff7f00","#7fff00","#ff1493","#1e90ff","#ffd700","#adff2f","#ff69b4","#00fa9a","#ffa500","#8a2be2","#ff4500","#7cfc00","#00ced1","#ff1493"];
 
   for (let i = 0; i < 200; i++) {
     const confetti = document.createElement("div");
-    confetti.classList.add("confetti");
+    confetti.className = "confetti";
 
-    // Random small size
-    const w = 3 + Math.random() * 5;
-    const h = 6 + Math.random() * 12;
-    confetti.style.width = w + "px";
-    confetti.style.height = h + "px";
-
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-    // Start at random X at top of page
-    const startX = Math.random() * window.innerWidth;
-    const startY = -10; // slightly above viewport
-    confetti.style.position = "absolute";
-    confetti.style.left = startX + "px";
-    confetti.style.top = startY + "px";
-    confetti.style.opacity = 0.9;
-    confetti.style.borderRadius = "2px";
-    
-    // Random fall speed and sway
-    const velocityY = 2 + Math.random() * 4;       // vertical speed
-    const sway = Math.random() * 4 - 2;            // left/right sway per frame
-    let posX = startX;
-    let posY = startY;
-    let rotation = Math.random() * 360;
-    const rotationSpeed = Math.random() * 10;
-
-    const fall = () => {
-      posY += velocityY;
-      posX += sway;
-      rotation += rotationSpeed;
-      confetti.style.transform = `translate(${posX - startX}px, ${posY}px) rotate(${rotation}deg)`;
-
-      if (posY < window.innerHeight + 20) {
-        requestAnimationFrame(fall);
-      } else {
-        confetti.remove();
-      }
-    };
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+    confetti.style.animationDuration = 3 + Math.random() * 3 + "s";
 
     container.appendChild(confetti);
-    requestAnimationFrame(fall);
+
+    setTimeout(() => confetti.remove(), 5000);
   }
 }
 
@@ -234,4 +201,8 @@ function flipCoin() {
     flipBtn.disabled = false;
     createConfetti(); // trigger lively confetti
   }, 5000);
+}
+
+function toggleMenu() {
+  document.getElementById("navMenu").classList.toggle("show");
 }

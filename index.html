@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="balance.svg" sizes="any" type="image/svg+xml" />
-    <title>Amount and Age Calculator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body>
-    <nav class="navbar">
-      <div class="tab">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon" href="balance.svg" sizes="any" type="image/svg+xml" />
+  <title>Amount and Age Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+
+      <div class="logo">Tools</div>
+
+      <div class="hamburger" onclick="toggleMenu()">
+        ☰
+      </div>
+
+      <div class="tab" id="navMenu">
         <button class="tablinks" onclick="openTab(event, 'amountTab')">
           Amount Calculator
         </button>
@@ -22,119 +31,75 @@
           Coin Flip
         </button>
       </div>
-    </nav>
 
-    <div id="amountTab" class="tabcontent">
-      <div class="amount-calculator">
-        <h2>Price/Quantity Calculator</h2>
-        <form id="calc-form" onsubmit="handleCalcBtnClick(event)">
-          <label for="InitialUnit"
-            ><strong>Enter Known Quantity (ml/gm etc.):</strong></label
-          ><br />
-          <input
-            class="input-number"
-            type="number"
-            id="InitialUnit"
-            name="InitialUnit"
-            required
-            step="0.01"
-          /><br />
-
-          <label for="InitialPrice"
-            ><strong>Enter Known Price (Rs):</strong></label
-          ><br />
-          <input
-            class="input-number"
-            type="number"
-            id="InitialPrice"
-            name="InitialPrice"
-            required
-            step="0.01"
-          /><br />
-
-          <label for="FinalUnit"
-            ><strong>Output Quantity (ml/gm etc.):</strong></label
-          ><br />
-          <input
-            class="input-number"
-            type="number"
-            id="FinalUnit"
-            name="FinalUnit"
-            onchange="clearOutputField('FinalAmount')"
-            step="0.01"
-          /><br />
-
-          <label for="FinalAmount"><strong>Output Price (Rs):</strong></label
-          ><br />
-          <input
-            class="input-number"
-            type="number"
-            id="FinalAmount"
-            name="FinalAmount"
-            step="0.01"
-            onchange="clearOutputField('FinalUnit')"
-          /><br />
-          <div class="footer-buttons">
-            <button type="submit">Calculate</button>
-            <button type="button" onclick="resetAmountForm()">Reset</button>
-          </div>
-        </form>
-
-        <p class="result" id="resultMessageAmount"></p>
-      </div>
     </div>
+  </nav>
 
-    <div id="ageTab" class="tabcontent">
-      <div class="age-calculator">
-        <h2>Age Calculator</h2>
-        <form id="age-calc-form" onsubmit="handleAgeCalcBtnClick(event)">
-          <label for="StartDate"><strong>Start Date:</strong></label
-          ><br />
-          <input
-            class="input-number"
-            type="date"
-            id="StartDate"
-            name="StartDate"
-            required
-          /><br />
+  <div id="amountTab" class="tabcontent">
+    <div class="amount-calculator">
+      <h2>Price/Quantity Calculator</h2>
+      <form id="calc-form" onsubmit="handleCalcBtnClick(event)">
+        <label for="InitialUnit"><strong>Enter Known Quantity (ml/gm etc.):</strong></label><br />
+        <input class="input-number" type="number" id="InitialUnit" name="InitialUnit" required step="0.01" /><br />
 
-          <label for="EndDate"><strong>End Date:</strong></label
-          ><br />
-          <input
-            class="input-number"
-            type="date"
-            id="EndDate"
-            name="EndDate"
-            required
-          /><br />
+        <label for="InitialPrice"><strong>Enter Known Price (Rs):</strong></label><br />
+        <input class="input-number" type="number" id="InitialPrice" name="InitialPrice" required step="0.01" /><br />
 
-          <div class="footer-buttons">
-            <button type="submit">Calculate</button>
-            <button type="button" onclick="resetAgeForm()">Reset</button>
-          </div>
-        </form>
+        <label for="FinalUnit"><strong>Output Quantity (ml/gm etc.):</strong></label><br />
+        <input class="input-number" type="number" id="FinalUnit" name="FinalUnit"
+          onchange="clearOutputField('FinalAmount')" step="0.01" /><br />
 
-        <p class="result" id="resultMessageAge"></p>
-      </div>
-    </div>
-    <div id="coinFlipTab" class="tabcontent">
-      <div class="container">
-        <h2>Coin Flip</h2>
-
-        <input type="text" id="name1" maxlength="6" placeholder="HEADS">
-        <input type="text" id="name2" maxlength="6" placeholder="TAILS"><br>
-
-        <button id="flipBtn" onclick="flipCoin()">Flip Coin</button>
-
-        <div class="coin" id="coin">
-          <div class="side front" id="frontText">HEADS</div>
-          <div class="side back" id="backText">TAILS</div>
+        <label for="FinalAmount"><strong>Output Price (Rs):</strong></label><br />
+        <input class="input-number" type="number" id="FinalAmount" name="FinalAmount" step="0.01"
+          onchange="clearOutputField('FinalUnit')" /><br />
+        <div class="footer-buttons">
+          <button type="submit">Calculate</button>
+          <button type="button" onclick="resetAmountForm()">Reset</button>
         </div>
+      </form>
 
-        <div class="resultflip" id="result"></div>
-      </div>
+      <p class="result" id="resultMessageAmount"></p>
     </div>
+  </div>
 
-    <script src="script.js"></script>
-  </body>
+  <div id="ageTab" class="tabcontent">
+    <div class="age-calculator">
+      <h2>Age Calculator</h2>
+      <form id="age-calc-form" onsubmit="handleAgeCalcBtnClick(event)">
+        <label for="StartDate"><strong>Start Date:</strong></label><br />
+        <input class="input-number" type="date" id="StartDate" name="StartDate" required /><br />
+
+        <label for="EndDate"><strong>End Date:</strong></label><br />
+        <input class="input-number" type="date" id="EndDate" name="EndDate" required /><br />
+
+        <div class="footer-buttons">
+          <button type="submit">Calculate</button>
+          <button type="button" onclick="resetAgeForm()">Reset</button>
+        </div>
+      </form>
+
+      <p class="result" id="resultMessageAge"></p>
+    </div>
+  </div>
+  <div id="coinFlipTab" class="tabcontent">
+    <div class="container">
+      <h2>Coin Flip</h2>
+
+      <input type="text" id="name1" maxlength="8" placeholder="HEADS">
+      <input type="text" id="name2" maxlength="8" placeholder="TAILS"><br>
+
+      <button id="flipBtn" onclick="flipCoin()">Flip Coin</button>
+
+      <div class="coin" id="coin">
+        <div class="side front" id="frontText">HEADS</div>
+        <div class="side back" id="backText">TAILS</div>
+      </div>
+
+      <div class="resultflip" id="result"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>

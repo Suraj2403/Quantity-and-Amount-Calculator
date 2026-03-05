@@ -18,6 +18,81 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
+/* Navbar */
+.navbar {
+  background-color: #333;
+  color: white;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+/* Logo */
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Menu */
+.tab {
+  display: flex;
+  gap: 10px;
+}
+
+/* Buttons */
+.tab button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.tab button:hover {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+/* Hamburger */
+.hamburger {
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .hamburger {
+    display: block;
+  }
+
+  .tab {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    background-color: #333;
+    text-align: center;
+  }
+
+  .tab button {
+    width: 100%;
+    border-top: 1px solid #444;
+  }
+
+  .tab.show {
+    display: flex;
+  }
+}
+
 .input-number {
   width: 100%;
   padding: 12px 20px;
@@ -190,11 +265,16 @@ form {
 }
 /* Confetti styles */
 .confetti {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
+  position: fixed;
+  width: 6px;
+  height: 10px;
+  top: -10px;
   opacity: 0.9;
-  transform-origin: center;
-  will-change: transform;
-  border-radius: 2px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
 }
